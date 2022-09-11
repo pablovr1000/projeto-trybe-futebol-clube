@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 
 const errorMiddleware = (
   error: unknown,
@@ -7,7 +8,8 @@ const errorMiddleware = (
   _next: NextFunction,
 ) => {
   console.log(error);
-  return response.status(500).json({ error, message: 'Internal Server Error' });
+  return response.status(StatusCodes.INTERNAL_SERVER_ERROR)
+    .json({ error, message: 'Internal Server Error' });
 };
 
 export default errorMiddleware;

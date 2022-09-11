@@ -1,36 +1,27 @@
 import { Request, Response } from 'express';
-import 'express-async-errors';
-import { JwtPayload } from 'jsonwebtoken';
+import { StatusCodes } from 'http-status-codes';
+import login from '../interfaces/login';
 import UserService from '../service/user.service';
-import Token from '../utils/token';
 
-export default class UserController {
-  private userService: UserService;
+require('express-async-errors');
 
-  constructor() {
-    this.userService = new UserService();
-  }
+class UserController {
+  constructor(private userService = new UserService()) {}
 
-  authenticateLogin = async (request: Request, response: Response) => {
-    const { email, password } = request.body;
+  public authenticateLogin = async (request: Request, response: Response) => {
+    const payload: login = request.body;
+    const user = await this.userService.login(payload);
 
-    const { code, user, token, message } = await this.userService.login(email, password);
-
-    if (!user) {
-      response.status(code).json({ message });
-    }
-
-    response.status(code).json(token);
+    response.status(StatusCodes.OK).json(user);
   };
 
-  authenticateValidation = async (request: Request, response: Response) => {
-    const { authorization } = request.headers;
+  public authenticateValidation = async (_req: Request, res: Response) => {
+    const { payload } = res.locals;
 
-    if (!authorization) return response.status(400).json({ message: 'Unauthorized' });
+    const role = await this.userService.role(payload.email);
 
-    const validateToken = new Token();
-    const decodeUser = await validateToken.decodeToken(authorization) as JwtPayload;
-
-    return response.status(200).json(decodeUser.role);
+    res.status(StatusCodes.OK).json(role);
   };
 }
+
+export default new UserController();

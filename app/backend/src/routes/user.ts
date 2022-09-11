@@ -4,9 +4,8 @@ import UserController from '../controller/user.controller';
 import validateToken from '../middleware/token.middleware';
 
 const routerUser = Router();
-const userController = new UserController();
 
-routerUser.post('/login', userMiddleware, userController.authenticateLogin);
-routerUser.get('/login/validate', validateToken, userController.authenticateValidation);
+routerUser.post('/login', userMiddleware, UserController.authenticateLogin);
+routerUser.get('/login/validate', validateToken, UserController.authenticateValidation);
 
 export default routerUser;

@@ -1,23 +1,27 @@
 import { NextFunction, Request, Response } from 'express';
-import { JwtPayload } from 'jsonwebtoken';
-
+import { StatusCodes } from 'http-status-codes';
+import HttpException from '../utils/http.exception';
+import { ReturnJwt } from '../interfaces/jwt';
 import jwt from '../utils/jwt';
 
-function validateToken(request: Request, response: Response, next: NextFunction) {
-  const token = <string>request.headers.authorization;
+const validateToken = (request: Request, response: Response, next: NextFunction) => {
+  const { authorization } = request.headers;
+
+  if (!authorization) {
+    return next({ status: StatusCodes.UNAUTHORIZED, message: 'Token not found' });
+  }
 
   try {
-    const userDecoded: string | JwtPayload = jwt.verify(token);
-    console.log(userDecoded);
-    response.locals.user = userDecoded;
-    next();
-  } catch (error: any) {
-    error.status = 401;
-
-    error.message = 'Token must be a valid token';
-
-    next(error);
+    const token = jwt.verify(authorization as string) as ReturnJwt;
+    response.locals.payload = token;
+  } catch (e) {
+    if (e instanceof Error) {
+      console.log('Token error: ', e.message);
+    }
+    throw new HttpException(StatusCodes.UNAUTHORIZED, 'Token must be a valid token');
   }
-}
+
+  return next();
+};
 
 export default validateToken;
