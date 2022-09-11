@@ -3,7 +3,7 @@ import 'express-async-errors';
 import {
   routerUser,
   routerTeam,
-  // routerMatch,
+  routerMatch,
   // routerLeaderboard,
 } from './routes/index';
 
@@ -35,7 +35,7 @@ class App {
   private routes(): void {
     this.app.use(routerUser);
     this.app.use(routerTeam);
-    // this.app.use(routerMatch);
+    this.app.use(routerMatch);
     // this.app.use(routerLeaderboard);
   }
 
