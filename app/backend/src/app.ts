@@ -1,4 +1,10 @@
 import * as express from 'express';
+import {
+  routerUser,
+  routerTeam,
+  routerMatch,
+  routerLeaderboard,
+} from './routes/index';
 
 class App {
   public app: express.Express;
@@ -7,6 +13,7 @@ class App {
     this.app = express();
 
     this.config();
+    this.routes();
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
@@ -22,6 +29,13 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
+  }
+
+  private routes(): void {
+    this.app.use(routerUser);
+    this.app.use(routerTeam);
+    this.app.use(routerMatch);
+    this.app.use(routerLeaderboard);
   }
 
   public start(PORT: string | number):void {
