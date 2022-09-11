@@ -6,7 +6,7 @@ import validateToken from '../middleware/token.middleware';
 const routerUser = Router();
 const userController = new UserController();
 
-routerUser.get('/login', userMiddleware, userController.authenticateLogin);
-routerUser.post('/login/validate', validateToken);
+routerUser.post('/login', userMiddleware, userController.authenticateLogin);
+routerUser.get('/login/validate', validateToken);
 
 export default routerUser;

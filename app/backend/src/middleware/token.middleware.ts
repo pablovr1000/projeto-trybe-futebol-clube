@@ -8,7 +8,7 @@ function validateToken(request: Request, response: Response, next: NextFunction)
 
   try {
     const userDecoded: string | JwtPayload = jwt.verify(token);
-
+    console.log(userDecoded);
     response.locals.user = userDecoded;
     next();
   } catch (error: any) {
