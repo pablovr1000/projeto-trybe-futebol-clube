@@ -32,6 +32,13 @@ export default class MatchService {
       });
     }
 
+    if (inProgress === 'false') {
+      return Match.findAll({
+        ...this._query,
+        where: { inProgress: false },
+      });
+    }
+
     return Match.findAll({
       ...this._query,
       where: { inProgress: false },

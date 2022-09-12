@@ -4,7 +4,7 @@ import Team from '../database/models/Teams';
 
 const createMatchValidation = async (request: Request, response: Response, next: NextFunction) => {
   const { homeTeam, awayTeam } = request.body;
-  if (homeTeam === awayTeam) {
+  if (homeTeam && awayTeam && (homeTeam === awayTeam)) {
     return response.status(StatusCodes.UNAUTHORIZED)
       .json({ message: 'It is not possible to create a match with two equal teams' });
   }
