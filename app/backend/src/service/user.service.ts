@@ -1,11 +1,8 @@
 import { StatusCodes } from 'http-status-codes';
 import { compare } from 'bcryptjs';
 import jwt from '../utils/jwt';
-import StatusError from '../utils/http.exception';
 import User from '../database/models/User';
 import login from '../interfaces/login';
-
-const unauthorizedMessage = 'Incorrect email or password';
 
 export default class UserServices {
   private _user: User | null;
@@ -14,12 +11,12 @@ export default class UserServices {
     this._user = await User.findOne({ where: { email } });
 
     if (!this._user) {
-      return new StatusError(unauthorizedMessage, StatusCodes.UNAUTHORIZED);
+      return 401;
     }
 
     const passwordValidate = await compare(password, this._user.password);
     if (!passwordValidate) {
-      return new StatusError(unauthorizedMessage, StatusCodes.UNAUTHORIZED);
+      return 401;
     }
 
     const payload = {
