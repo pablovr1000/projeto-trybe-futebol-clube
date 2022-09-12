@@ -1,7 +1,5 @@
 import * as express from 'express';
-import * as cors from 'cors';
 import ErrorHandler from './middleware/error.middleware';
-import 'express-async-errors';
 import {
   routerUser,
   routerTeam,
@@ -16,19 +14,16 @@ class App {
     this.app = express();
 
     this.config();
-    this.routes();
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
   }
 
-  private corsConfig():void {
-    const options: cors.CorsOptions = {
-      methods: 'GET, OPTIONS, POST, DELETE, PUT, PATCH',
-      origin: '*',
-    };
-
-    this.app.use(cors(options));
+  private routes(): void {
+    this.app.use(routerUser);
+    this.app.use(routerTeam);
+    this.app.use(routerMatch);
+    this.app.use(routerLeaderboard);
   }
 
   private config():void {
@@ -41,18 +36,6 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
-    this.corsConfig();
-    this.app.use(ErrorHandler);
-  }
-
-  private routes(): void {
-    this.app.use(routerUser);
-    this.app.use(routerTeam);
-    this.app.use(routerMatch);
-    this.app.use(routerLeaderboard);
-  }
-
-  private errorMiddleware(): void {
     this.app.use(ErrorHandler);
   }
 
