@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import MatchService from '../service/match.service';
 
 export default class MatchesController {
@@ -9,13 +10,14 @@ export default class MatchesController {
   }
 
   public getAllMatches = async (_request: Request, response: Response) => {
-    const { statusCode, allMatches, message } = await this.matchService.getAllMatches();
+    const allMatches = await this.matchService.getAllMatches(null);
 
-    if (!allMatches) {
-      return response.status(statusCode).json({ message });
-    }
+    /* if (!allMatches) {
+      return response.status(StatusCodes.UNAUTHORIZED)
+        .json({ message: 'ok' });
+    } */
 
-    return response.status(statusCode).json(allMatches);
+    return response.status(StatusCodes.OK).json(allMatches);
   };
 
   public getMatchById = async (request: Request, response: Response) => {
@@ -34,7 +36,7 @@ export default class MatchesController {
     } = request.body;
 
     if (homeTeam === awayTeam) {
-      return response.status(401)
+      return response.status(StatusCodes.UNAUTHORIZED)
         .json({ message: 'It is not possible to create a match with two equal teams' });
     }
 

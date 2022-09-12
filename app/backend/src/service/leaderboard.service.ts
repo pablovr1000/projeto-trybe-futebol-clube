@@ -108,9 +108,9 @@ export default class LeaderboardServices {
 
   public getGameTeams = async (type: 'home' | 'away') => {
     const completedMatches = await this.matchServices.getAllMatches('false');
-    const allTeams = await this.teamServices.getAll();
+    const { teams } = await this.teamServices.getAll();
 
-    this.setTeams(allTeams);
+    this.setTeams(teams);
 
     if (type === 'home') {
       this.setTeamHome(completedMatches);
@@ -126,9 +126,9 @@ export default class LeaderboardServices {
 
   public getLeaderboard = async () => {
     const completedMatches = await this.matchServices.getAllMatches('false');
-    const allTeams = await this.teamServices.getAll();
+    const { teams } = await this.teamServices.getAll();
 
-    this.setTeams(allTeams);
+    this.setTeams(teams);
     this.setTeamHome(completedMatches);
     this.setTeamAway(completedMatches);
     this.setTeamGoalsBalance();

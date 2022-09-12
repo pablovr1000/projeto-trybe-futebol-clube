@@ -1,17 +1,20 @@
 import { StatusCodes } from 'http-status-codes';
-import HttpException from '../utils/http.exception';
 import Team from '../database/models/Teams';
 
 export default class TeamService {
-  public getAll = async () => Team.findAll();
+  public getAll = async () => {
+    const allTeams = await Team.findAll();
+    if (!allTeams) {
+      return { statusCode: StatusCodes.NOT_FOUND, message: 'No teams found', teams: [] };
+    }
+    return { statusCode: StatusCodes.OK, teams: allTeams };
+  };
 
   public getById = async (id: string) => {
     const teamById = await Team.findByPk(id);
 
-    if (!teamById) {
-      throw new HttpException(StatusCodes.BAD_REQUEST, 'No team was found');
-    }
+    if (!teamById) return { statusCode: StatusCodes.NOT_FOUND, message: 'Team not found' };
 
-    return teamById;
+    return { statusCode: StatusCodes.OK, team: teamById };
   };
 }
