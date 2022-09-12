@@ -35,11 +35,6 @@ export default class MatchesController {
       homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress,
     } = request.body;
 
-    if (homeTeam && awayTeam && (homeTeam === awayTeam)) {
-      return response.status(StatusCodes.UNAUTHORIZED)
-        .json({ message: 'It is not possible to create a match with two equal teams' });
-    }
-
     const { statusCode, match, message } = await this.matchService.createMatch({
       homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress,
     });
