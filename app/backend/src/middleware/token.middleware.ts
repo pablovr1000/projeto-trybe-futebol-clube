@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import HttpException from '../utils/http.exception';
+import StatusError from '../utils/http.exception';
 import { ReturnJwt } from '../interfaces/jwt';
 import jwt from '../utils/jwt';
 
@@ -18,7 +18,7 @@ const validateToken = (request: Request, response: Response, next: NextFunction)
     if (e instanceof Error) {
       console.log('Token error: ', e.message);
     }
-    throw new HttpException(StatusCodes.UNAUTHORIZED, 'Token must be a valid token');
+    throw new StatusError('Token must be a valid token', StatusCodes.UNAUTHORIZED);
   }
 
   return next();

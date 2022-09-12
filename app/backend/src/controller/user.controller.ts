@@ -10,9 +10,9 @@ class UserController {
 
   public authenticateLogin = async (request: Request, response: Response) => {
     const payload: login = request.body;
-    const user = await this.userService.login(payload);
+    const token = await this.userService.login(payload);
 
-    response.status(StatusCodes.OK).json(user);
+    response.status(StatusCodes.OK).json(token);
   };
 
   public authenticateValidation = async (_req: Request, res: Response) => {

@@ -1,9 +1,11 @@
 import { StatusCodes } from 'http-status-codes';
 import { compare } from 'bcryptjs';
 import jwt from '../utils/jwt';
-import HttpException from '../utils/http.exception';
+import StatusError from '../utils/http.exception';
 import User from '../database/models/User';
 import login from '../interfaces/login';
+
+const unauthorizedMessage = 'Incorrect email or password';
 
 export default class UserServices {
   private _user: User | null;
@@ -12,12 +14,12 @@ export default class UserServices {
     this._user = await User.findOne({ where: { email } });
 
     if (!this._user) {
-      throw new HttpException(StatusCodes.UNAUTHORIZED, 'Incorrect email or password');
+      throw new StatusError(unauthorizedMessage, StatusCodes.UNAUTHORIZED);
     }
 
     const passwordValidate = await compare(password, this._user.password);
     if (!passwordValidate) {
-      throw new HttpException(StatusCodes.UNAUTHORIZED, 'Incorrect email or password');
+      throw new StatusError(unauthorizedMessage, StatusCodes.UNAUTHORIZED);
     }
 
     const payload = {
@@ -42,7 +44,7 @@ export default class UserServices {
     });
 
     if (!this._user) {
-      throw new HttpException(StatusCodes.BAD_REQUEST, 'User not find');
+      return { statusCode: StatusCodes.BAD_REQUEST, message: 'User not find' };
     }
 
     return { role: this._user?.role };
