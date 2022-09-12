@@ -4,30 +4,38 @@ import Team from '../database/models/Teams';
 
 export default class MatchService {
   notFound:string;
+  private _query = {
+    include: [
+      {
+        model: Team,
+        as: 'teamHome',
+        attributes: { exclude: ['id'] },
+      },
+      {
+        model: Team,
+        as: 'teamAway',
+        attributes: { exclude: ['id'] },
+      },
+    ],
+  };
 
   constructor() {
     this.notFound = 'Match not found';
   }
 
-  public getAllMatches = async () => {
-    const findAllMatches = await Match.findAll({
-      include: [
-        {
-          model: Team,
-          as: 'teamHome',
-          attributes: { exclude: ['id'] },
-        },
-        {
-          model: Team,
-          as: 'teamAway',
-          attributes: { exclude: ['id'] },
-        },
-      ],
+  public getAllMatches = async (inProgress: 'true' | 'false' | null) => {
+    if (!inProgress) return Match.findAll(this._query);
+    if (inProgress === 'true') {
+      return Match.findAll({
+        ...this._query,
+        where: { inProgress: true },
+      });
+    }
+
+    return Match.findAll({
+      ...this._query,
+      where: { inProgress: false },
     });
-
-    if (!findAllMatches) return { statusCode: 401, message: this.notFound };
-
-    return { statusCode: 200, allMatches: findAllMatches };
   };
 
   public getMatchById = async (id: string) => {
