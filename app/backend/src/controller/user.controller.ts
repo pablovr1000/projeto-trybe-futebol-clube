@@ -12,6 +12,9 @@ class UserController {
     const payload: login = request.body;
     const token = await this.userService.login(payload);
 
+    if (StatusCodes.UNAUTHORIZED) {
+      response.status(StatusCodes.UNAUTHORIZED).json({ message: 'Incorrect email or password' });
+    }
     response.status(StatusCodes.OK).json(token);
   };
 

@@ -8,7 +8,7 @@ const validateToken = (request: Request, response: Response, next: NextFunction)
   const { authorization } = request.headers;
 
   if (!authorization) {
-    return next({ status: StatusCodes.UNAUTHORIZED, message: 'Token not found' });
+    return response.status(StatusCodes.UNAUTHORIZED).json({ message: 'Token not found' });
   }
 
   try {

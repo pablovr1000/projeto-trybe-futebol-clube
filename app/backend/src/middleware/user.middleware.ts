@@ -5,10 +5,11 @@ import userSchema from './joi/user.joi';
 const userMiddleware = (request: Request, response: Response, next: NextFunction) => {
   const { email, password } = request.body;
 
-  const { error } = userSchema.validate({ email, password }, { abortEarly: false });
+  const { error } = userSchema.validate({ email, password }, { abortEarly: true });
 
   if (error) {
-    return response.status(StatusCodes.BAD_REQUEST).json(error.message);
+    return response.status(StatusCodes.BAD_REQUEST)
+      .json({ message: 'All fields must be filled' });
   }
 
   return next();

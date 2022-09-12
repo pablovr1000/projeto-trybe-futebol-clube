@@ -18,16 +18,19 @@ const Login = () => {
 
     try {
       const { token } = await requestLogin('/login', { email, password });
+      console.log(token);
 
       setToken(token);
 
       const { role } = await requestData('/login/validate', { email, password });
+      console.log(role);
 
       localStorage.setItem('token',  token);
       localStorage.setItem('role',  role);
 
       setIsLogged(true);
     } catch (error) {
+      console.log(error);
       setFailedTryLogin(true);
       setIsLogged(false);
     }
