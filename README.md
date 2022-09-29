@@ -12,7 +12,7 @@
 
 <br>
 
-Esse o um projeto de uma API que tem como objetivo gerenciar uma tabela de times de futebol, com usuário, times, partidas e classificação
+Esse o um projeto de uma API que tem como objetivo gerenciar uma tabela de times de futebol, com usuário, times, partidas e classificação e está sendo provido para o front-end disponível neste projeto.
 
 Back-end deste projeto foi desenvolvido por mim
 
@@ -28,7 +28,15 @@ Front-end deste projeto foi fornecido pela <a href="https://www.betrybe.com/" ta
 <details><summary>Decisões durante o desenvolvimento do projeto</summary>
 <p>
 
-Diferente do proposto no read.me do projeto, resolvi não seguir o desenvolvimento em TDD em benefício do tempo, por tanto, segui os requisitos principais de desenvolvimento dos EndPoints
+Este projeto tem como intuito a utilização das seguintes tecnologias e conhecimentos vistos na Trybe.
+  Docker
+  SQL (MySQL)
+  ORM Sequelize
+  TypeScript
+  Express
+  Arquitetura MSC
+  Programação Orientada a Objetos e SOLID
+  
 
 </p>
 </details>
