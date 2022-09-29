@@ -12,7 +12,11 @@
 
 <br>
 
-Esse é um projeto de uma API que tem como objetivo gerenciar uma tabela de times de futebol, com usuário, times, partidas e classificação
+Esse o um projeto de uma API que tem como objetivo gerenciar uma tabela de times de futebol, com usuário, times, partidas e classificação
+
+Back-end deste projeto foi desenvolvido por mim
+
+Front-end deste projeto foi fornecido pela <a href="https://www.betrybe.com/" target="_blank">Trybe</a></h3> para desenvolvimento do projeto
 
 <p align="right"><a href="#top">Voltar ao topo</a></p>
 
