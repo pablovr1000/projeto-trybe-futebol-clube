@@ -29,13 +29,13 @@ Front-end deste projeto foi fornecido pela <a href="https://www.betrybe.com/" ta
 <p>
 
 Este projeto tem como intuito a utilização das seguintes tecnologias e conhecimentos vistos na Trybe.
-  Docker
-  SQL (MySQL)
-  ORM Sequelize
-  TypeScript
-  Express
-  Arquitetura MSC
-  Programação Orientada a Objetos e SOLID
+  * Docker
+  * SQL (MySQL)
+  * ORM Sequelize
+  * TypeScript
+  * Express
+  * Arquitetura MSC
+  * Programação Orientada a Objetos e SOLID
   
 
 </p>
